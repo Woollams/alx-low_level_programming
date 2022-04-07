@@ -64,4 +64,38 @@ int word_count(char *str, int str_len)
 		i++;
 	}
 	if (words == 0)
+		return (0);
+	return (words);
+}
 
+/**
+ * strtow - splits a string into words
+ * @str: input string to split
+ * Return: pointer to new string
+ */
+char **strtow(char *str)
+{
+	char **newstr;
+	int i = 0, j = 0, str_len = 0, words;
+
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
+	while (*(str + str_len) != '\0')
+		str_len++;
+	words = word_count(str, str_len);
+	if (!words)
+		return (NULL);
+	newstr = malloc((words + 1) * sizeof(char *));
+	mallocmem(newstr, str, str_len);
+	while (i < str_len)
+	{
+		if (str[i] != ' ')
+		{
+			i = strncat_mod(newstr[j], str, i, str_len);
+			j++, i--;
+		}
+		i++;
+	}
+	newstr[words + 1] = NULL;
+	return (newstr);
+}
